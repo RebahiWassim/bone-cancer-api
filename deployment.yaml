@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bone-cancer-deployment
+  labels:
+    app: bone-cancer
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bone-cancer
+  template:
+    metadata:
+      labels:
+        app: bone-cancer
+        version: v1
+    spec:
+      containers:
+      - name: bone-cancer-api
+        image: bone-cancer-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8006
+          name: http
+        env:
+        - name: MODEL_PATH
+          value: "model/bone_cancer_model.pth"
+        - name: IMG_SIZE
+          value: "224"
+        - name: MC_PASSES
+          value: "10"
+        - name: PYTHONPATH
+          value: "/app"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8006
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8006
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always

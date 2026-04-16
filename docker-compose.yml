@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  bone-cancer-api:
+    build: .
+    container_name: bone-cancer-api
+    ports:
+      - "8006:8006"
+    environment:
+      - MODEL_PATH=model/bone_cancer_model.pth
+      - IMG_SIZE=224
+      - MC_PASSES=10
+    volumes:
+      - ./model:/app/model
+      - ./app:/app/app
+    restart: unless-stopped
+    networks:
+      - bone-cancer-network
+
+networks:
+  bone-cancer-network:
+    driver: bridge
