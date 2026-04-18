@@ -4,6 +4,8 @@ import torch
 class Settings:
     # Chemins
     MODEL_PATH = os.getenv("MODEL_PATH", "model/bone_cancer_model.pth")
+
+    extra = "ignore"
     
     # Paramètres du modèle
     IMG_SIZE = int(os.getenv("IMG_SIZE", 224))

@@ -17,6 +17,19 @@ services:
     networks:
       - bone-cancer-network
 
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok
+    command: http bone-cancer-api:8006
+    environment:
+      - NGROK_AUTHTOKEN=3CXyV6ELbTBjWzk5dkKcHdK6ZGp_ZGjExJkxTYFgfQenxYfp
+    ports:
+      - "4040:4040"
+    depends_on:
+      - bone-cancer-api
+    networks:
+      - bone-cancer-network
+
 networks:
   bone-cancer-network:
     driver: bridge
