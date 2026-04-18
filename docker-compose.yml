@@ -19,10 +19,10 @@ services:
 
   ngrok:
     image: ngrok/ngrok:latest
-    container_name: ngrok
+    container_name: ngrok-bone-cancer
     command: http bone-cancer-api:8006
     environment:
-      - NGROK_AUTHTOKEN=3CXyV6ELbTBjWzk5dkKcHdK6ZGp_ZGjExJkxTYFgfQenxYfp
+      - NGROK_AUTHTOKEN=3CYCoqthKel97RPqhohZDn5YmSm_2ju6X8WUTWKXnuLnvbvku
     ports:
       - "4040:4040"
     depends_on:
